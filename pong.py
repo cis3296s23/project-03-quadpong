@@ -170,15 +170,7 @@ while True:
     elif ball.xcor() > 325 and ball.ycor() < paddle_b.ycor() + 50 and ball.ycor() > paddle_b.ycor() - 50:
         ball.dx *= -1
     
-   
-    #score_a = 10 or score_b = 10 or score_c = 10 or score_d = 10 ------- (might use) piece to create a score limit
-    #scoring works for all four players, but after adding the two extra paddles trouble figuring out the boundries for the ball to bounce off each paddle
-
-    #____ISSUES____
-    #note ----commenting out lines (164 - 174) and (191 - 203) and (215 - 221) allows for you to play the two player version---- (if four player did not work) [SOLVED]
-    # scoring works for all four sides only issue is getting the green and purple paddles to work. [after a couple of attempts the problem was solved] [SOLVED]
-       
-        
+   #Testing Commit
         
 
    
