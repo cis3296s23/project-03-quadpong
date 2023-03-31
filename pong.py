@@ -170,7 +170,7 @@ while True:
     elif ball.xcor() > 325 and ball.ycor() < paddle_b.ycor() + 50 and ball.ycor() > paddle_b.ycor() - 50:
         ball.dx *= -1
     
-   #Testing Commit
+   #Testing Commit in Grenell Branch
         
 
    
