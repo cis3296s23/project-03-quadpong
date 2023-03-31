@@ -1,6 +1,6 @@
 # Quad Pong
-  -The classic game of Pong updated to work in python and have 4 players over the traditional two. 
-  -Classic 2p mode and 4p Free for all and 2v2.
+  - The classic game of Pong updated to work in python and have 4 players over the traditional two. 
+  - Classic 2p mode and 4p Free for all and 2v2.
 
 ![This is a screenshot.](images.png)
 # How to run
