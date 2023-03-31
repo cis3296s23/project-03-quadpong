@@ -6,6 +6,7 @@
 # How to run
 Provide here instructions on how to use your application.   
 - Install Python ( any ver 3.6-3.11 works, but 3.9 is ideal) [here](https://www.python.org/downloads/release/python-390/) 
+- Download Pong.py 
 - On the command line type pip install pygame or pip3 install pygame
 - On the command line type python pong.py
 - The rules will pop up and the game will start, have fun!
