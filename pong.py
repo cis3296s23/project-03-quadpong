@@ -73,6 +73,24 @@ paddle_b.shapesize(stretch_wid=4,stretch_len=1)
 paddle_b.penup()
 paddle_b.goto(340, 0)
 
+#Paddle C
+paddle_c = turtle.Turtle()
+paddle_c.speed(3)
+paddle_c.shape("square")
+paddle_c.color("green")
+paddle_c.shapesize(stretch_wid=1,stretch_len=4)
+paddle_c.penup()
+paddle_c.goto(0, 250)
+
+#Paddle D
+paddle_d = turtle.Turtle()
+paddle_d.speed(3)
+paddle_d.shape("square")
+paddle_d.color("purple")
+paddle_d.shapesize(stretch_wid=1,stretch_len=4)
+paddle_d.penup()
+paddle_d.goto(0, -250)
+
 
 #Ball
 ball = turtle.Turtle()
@@ -118,6 +136,28 @@ def paddle_b_down():
     y -= 50
     paddle_b.sety(y)
 
+#Paddle C
+def paddle_c_left():
+    x = paddle_c.xcor()
+    x += 50
+    paddle_c.setx(x)
+
+def paddle_c_right():
+    x = paddle_c.xcor()
+    x -= 50
+    paddle_c.setx(x)
+
+#Paddle D
+def paddle_d_left():
+    x = paddle_d.xcor()
+    x += 50
+    paddle_d.setx(x)
+
+def paddle_d_right():
+    x = paddle_d.xcor()
+    x -= 50
+    paddle_d.setx(x)
+
 def start_key():
     start = start_key
 
@@ -128,6 +168,11 @@ wn.onkeypress(paddle_a_up, "w")
 wn.onkeypress(paddle_a_down, "s")
 wn.onkeypress(paddle_b_up, "Up")
 wn.onkeypress(paddle_b_down, "Down")
+
+wn.onkeypress(paddle_c_left, "h")
+wn.onkeypress(paddle_c_right, "g")
+wn.onkeypress(paddle_d_right, "1")
+wn.onkeypress(paddle_d_left, "2")
 
 
 # ___MAIN___
@@ -169,6 +214,14 @@ while True:
     #BLUE PADDLE & BALL
     elif ball.xcor() > 325 and ball.ycor() < paddle_b.ycor() + 50 and ball.ycor() > paddle_b.ycor() - 50:
         ball.dx *= -1
+
+    # GREEN PADDLE
+    elif ball.ycor() > 240 and ball.xcor() < paddle_c.xcor() + 50 and ball.xcor() > paddle_c.xcor() - 50:
+        ball.dy *= -1
+
+    # PURPLE PADDLE
+    elif ball.ycor() < -240 and ball.xcor() < paddle_d.xcor() + 50 and ball.xcor() > paddle_d.xcor() - 50:
+        ball.dy *= -1
     
    #Testing Commit
         
