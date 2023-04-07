@@ -1,5 +1,5 @@
 # ___QUAD PONG___
-#Domenic Malinsky 2022
+#Domenic Malinsky 2023
 #Credit For Christian Thompson @TokyoEdTech for the basic starter guide on 2 player pong.
 
 import turtle
@@ -52,8 +52,8 @@ bd.fd(540)
 bd.hideturtle()
 
 #Score
-score_a = 0
-score_b = 0
+score_1 = 0
+score_2 = 0
 
 #Paddle A
 paddle_a = turtle.Turtle()
@@ -99,8 +99,8 @@ ball.shape("circle")
 ball.color("black")
 ball.penup()
 ball.goto(0, 0)
-ball.dx = 1
-ball.dy = 1
+ball.dx = 3
+ball.dy = 3
 
 #Pen
 pen = turtle.Turtle()
@@ -128,7 +128,7 @@ def paddle_a_down():
 #Paddle B
 def paddle_b_up():
     y = paddle_b.ycor()
-    y += 50 
+    y += 50
     paddle_b.sety(y)
 
 def paddle_b_down():
@@ -137,23 +137,23 @@ def paddle_b_down():
     paddle_b.sety(y)
 
 #Paddle C
-def paddle_c_left():
+def paddle_c_right():
     x = paddle_c.xcor()
     x += 50
     paddle_c.setx(x)
 
-def paddle_c_right():
+def paddle_c_left():
     x = paddle_c.xcor()
     x -= 50
     paddle_c.setx(x)
 
 #Paddle D
-def paddle_d_left():
+def paddle_d_right():
     x = paddle_d.xcor()
     x += 50
     paddle_d.setx(x)
 
-def paddle_d_right():
+def paddle_d_left():
     x = paddle_d.xcor()
     x -= 50
     paddle_d.setx(x)
@@ -169,10 +169,11 @@ wn.onkeypress(paddle_a_down, "s")
 wn.onkeypress(paddle_b_up, "Up")
 wn.onkeypress(paddle_b_down, "Down")
 
-wn.onkeypress(paddle_c_left, "h")
-wn.onkeypress(paddle_c_right, "g")
-wn.onkeypress(paddle_d_right, "1")
-wn.onkeypress(paddle_d_left, "2")
+wn.onkeypress(paddle_c_left, "a")
+wn.onkeypress(paddle_c_right, "d")
+wn.onkeypress(paddle_d_left, "Left")
+wn.onkeypress(paddle_d_right, "Right")
+
 
 
 # ___MAIN___
@@ -186,45 +187,81 @@ while True:
 
     #Scoring 
     if ball.xcor() > 370:
-        score_a += 1
+        score_1 += 1
         pen.clear()
-        pen.write("Player RED: {}  Player BLUE: {} ".format(score_a, score_b), align="center", font=("Courier", 19, "bold"))
+        pen.write("Team 1: {}  Team 2: {} ".format(score_1, score_2), align="center", font=("Courier", 19, "bold"))
         ball.goto(0, 0)
         ball.dx *= -1
 
     elif ball.xcor() < -370:
-        score_b += 1
+        score_2 += 1
         pen.clear()
-        pen.write("Player RED: {}  Player BLUE: {} ".format(score_a, score_b), align="center", font=("Courier", 19, "bold"))
+        pen.write("Team 1: {}  Team 2: {} ".format(score_1, score_2), align="center", font=("Courier", 19, "bold"))
         ball.goto(0, 0)
         ball.dx *= -1
-    
+
     elif ball.ycor() > 260:
+        score_1 += 1
+        pen.clear()
+        pen.write("Team 1: {}  Team 2: {} ".format(score_1, score_2), align="center", font=("Courier", 19, "bold"))
+        ball.goto(0, 0)
         ball.dy *= -1
     
     elif ball.ycor() < -260:
+        score_2 += 1
+        pen.clear()
+        pen.write("Team 1: {}  Team 2: {} ".format(score_1, score_2), align="center", font=("Courier", 19, "bold"))
+        ball.goto(0, 0)
         ball.dy *= -1
     
 
-    #Collision
-    #RED PADDLE & BALL
-    if ball.xcor() < -325 and ball.ycor() < paddle_a.ycor() + 50 and ball.ycor() > paddle_a.ycor() - 50:
+    #bounds
+    if paddle_a.ycor() >= 240:
+        paddle_a.sety(225)
+    
+    elif paddle_a.ycor() <= -240:
+        paddle_a.sety(-225)
+
+    if paddle_b.ycor() >= 240:
+        paddle_b.sety(225)
+
+    elif paddle_b.ycor() <= -240:
+        paddle_b.sety(-225)
+
+    if paddle_c.xcor() >= 320:
+        paddle_c.setx(320)
+
+    elif paddle_c.xcor() <= -320:
+        paddle_c.setx(-320)
+
+    if paddle_d.xcor() >= 320:
+        paddle_d.setx(320)
+
+    elif paddle_d.xcor() <= -320:
+        paddle_d.setx(-320)
+    
+    
+
+    #Collision w Ball
+    #RED PADDLE 
+    if ball.xcor() < -320 and ball.ycor() < paddle_a.ycor() + 50 and ball.ycor() > paddle_a.ycor() - 50:
         ball.dx *= -1 
 
-    #BLUE PADDLE & BALL
-    elif ball.xcor() > 325 and ball.ycor() < paddle_b.ycor() + 50 and ball.ycor() > paddle_b.ycor() - 50:
+    #BLUE PADDLE 
+    elif ball.xcor() > 320 and ball.ycor() < paddle_b.ycor() + 50 and ball.ycor() > paddle_b.ycor() - 50:
         ball.dx *= -1
 
     # GREEN PADDLE
-    elif ball.ycor() > 240 and ball.xcor() < paddle_c.xcor() + 50 and ball.xcor() > paddle_c.xcor() - 50:
+    elif ball.ycor() > 230 and ball.xcor() < paddle_c.xcor() + 50 and ball.xcor() > paddle_c.xcor() - 50:
         ball.dy *= -1
 
     # PURPLE PADDLE
-    elif ball.ycor() < -240 and ball.xcor() < paddle_d.xcor() + 50 and ball.xcor() > paddle_d.xcor() - 50:
+    elif ball.ycor() < -230 and ball.xcor() < paddle_d.xcor() + 50 and ball.xcor() > paddle_d.xcor() - 50:
         ball.dy *= -1
-    
-   #Testing Commit in Grenell Branch
         
+    #Paddle w Paddle 
+    
+    #TODO add proper paddle collision
 
    
     
