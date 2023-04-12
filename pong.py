@@ -8,6 +8,7 @@ import wave
 import pygame
 import sys
 import time
+import paddle
 from tkinter import *
 
 #song = wave.open("C:\Users\Domenic Malinsky\Desktop\Code\Python\GAME\ancients.mp3", "r")
@@ -56,13 +57,7 @@ score_1 = 0
 score_2 = 0
 
 #Paddle A
-paddle_a = turtle.Turtle()
-paddle_a.speed(3)
-paddle_a.shape("square")
-paddle_a.color("red")
-paddle_a.shapesize(stretch_wid=4,stretch_len=1)
-paddle_a.penup()
-paddle_a.goto(-340, 0)
+pad_a = paddle.paddle("red", "v", 4, 3, -340, 0)
 
 #Paddle B
 paddle_b = turtle.Turtle()
@@ -114,16 +109,6 @@ pen.write("Player RED: 0  Player BLUE: 0", align="center", font=("Courier", 19, 
 
 # ---Moving Paddles--- 
 # Numbers mean how many increments the paddle moves for respective paddle direction.
-#Paddle A
-def paddle_a_up():
-    y = paddle_a.ycor()
-    y += 50
-    paddle_a.sety(y)
-
-def paddle_a_down():
-    y = paddle_a.ycor()
-    y -= 50
-    paddle_a.sety(y)
 
 #Paddle B
 def paddle_b_up():
@@ -164,8 +149,8 @@ def start_key():
 #Keyboard Bindings
 wn.listen()
 
-wn.onkeypress(paddle_a_up, "w")
-wn.onkeypress(paddle_a_down, "s")
+wn.onkeypress(pad_a.paddle_up(), "w")
+wn.onkeypress(pad_a.paddle_down(), "s")
 wn.onkeypress(paddle_b_up, "Up")
 wn.onkeypress(paddle_b_down, "Down")
 
@@ -216,11 +201,11 @@ while True:
     
 
     #bounds
-    if paddle_a.ycor() >= 240:
-        paddle_a.sety(225)
+    if pad_a.obj.ycor() >= 240:
+        pad_a.obj.sety(225)
     
-    elif paddle_a.ycor() <= -240:
-        paddle_a.sety(-225)
+    elif pad_a.obj.ycor() <= -240:
+        pad_a.obj.sety(-225)
 
     if paddle_b.ycor() >= 240:
         paddle_b.sety(225)
@@ -244,7 +229,7 @@ while True:
 
     #Collision w Ball
     #RED PADDLE 
-    if ball.xcor() < -320 and ball.ycor() < paddle_a.ycor() + 50 and ball.ycor() > paddle_a.ycor() - 50:
+    if ball.xcor() < -320 and ball.ycor() < pad_a.obj.ycor() + 50 and ball.ycor() > pad_a.obj.ycor() - 50:
         ball.dx *= -1 
 
     #BLUE PADDLE 
