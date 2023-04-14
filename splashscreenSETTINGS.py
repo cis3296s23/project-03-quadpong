@@ -5,8 +5,9 @@ def SETTINGS():
     pygame.init()
 
     # set window size
-    win_width = 1920
-    win_height = 1080
+    info = pygame.display.Info()
+    win_width = info.current_w
+    win_height = info.current_h
 
     # set small window size
     small_win_width = int(win_width / 3.2)

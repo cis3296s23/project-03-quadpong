@@ -5,8 +5,12 @@ import splashscreenSETTINGS
 pygame.init()
 
 # set window size
-win_width = 1920
-win_height = 1080
+#win_width = 1920
+#win_height = 1080
+info = pygame.display.Info()
+win_width = info.current_w
+win_height = info.current_h
+
 window = pygame.display.set_mode((win_width, win_height))
 
 # set font for text

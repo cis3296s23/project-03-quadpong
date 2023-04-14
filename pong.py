@@ -5,8 +5,8 @@
 import turtle
 import os
 import wave
-import pygame
 import sys
+import pygame
 import time
 from tkinter import *
 
@@ -99,8 +99,8 @@ ball.shape("circle")
 ball.color("black")
 ball.penup()
 ball.goto(0, 0)
-ball.dx = 3
-ball.dy = 3
+ball.dx = 1
+ball.dy = 1
 
 #Pen
 pen = turtle.Turtle()
