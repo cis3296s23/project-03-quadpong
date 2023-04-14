@@ -1,4 +1,8 @@
 import pygame
+
+import splashscreen
+
+
 def SETTINGS():
 
     # initialize pygame
@@ -47,8 +51,9 @@ def SETTINGS():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if quit_pos.collidepoint(event.pos):  # if user clicks quit button
                     pygame.quit()
-                    quit() # some python code needs to be replaced, so it takes you back to the main menu
+                    #quit() # some python code needs to be replaced, so it takes you back to the main menu
                     # after quitting any settings need to be updated
+                    splashscreen.splashscreen()
                 elif option1_pos.collidepoint(event.pos): # if user clicks option 1
                     print("Ball Speed selected(Add feature later")
                 elif option2_pos.collidepoint(event.pos): # if user clicks option 2
