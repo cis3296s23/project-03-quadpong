@@ -1,11 +1,11 @@
-import turtle
-from tkinter import *
+
+from turtle import Turtle
 
 
 
 class paddle:
     def __init__(self, color, orientation, x, y):
-        self.turtle = turtle.Turtle()
+        self.turtle = Turtle()
         self.orientation = orientation
         self.turtle.speed(3)
         self.turtle.shape("square")

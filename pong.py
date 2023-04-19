@@ -1,44 +1,22 @@
 # ___QUAD PONG___
-#Domenic Malinsky 2023
-#Credit For Christian Thompson @TokyoEdTech for the basic starter guide on 2 player pong.
+#Domenic Malinsky, Rishi Duggal, Tyler Grenell 2023
 
-import turtle
+
+from turtle import Screen, Turtle
 import os
-import wave
-import sys
-import pygame
 import time
-import paddle
-from tkinter import *
+from Paddle import paddle
 
-#song = wave.open("C:\Users\Domenic Malinsky\Desktop\Code\Python\GAME\ancients.mp3", "r")
-#p = vlc.MediaPlayer("C:\Users\Domenic Malinsky\Desktop\Code\Python\GAME\ancients.mp3")
-#p.play()
-#os.system("afplay ancients.mp3")-mac(feels bad man)
 
-title = Tk()
-title.title("Quad Pong")
-label_1 = Label(title, text = "Welcome To Pong")
-label_2 = Label(title, text = "RULES")
-label_3 = Label(title, text = "1. Control your paddle, [RIGHT: W UP, S DOWN], [LEFT UP ARROW UP, DOWN ARROW DOWN]")
-label_4 = Label(title, text = "2. Get the ball to the opposite bound of the screen to score.")
-label_5 = Label(title, text = "3. There is no score limit you can go for as long as you want do not stress over who wins it will take the focus away from the game.")
-label_6 = Label(title, text = "Also the game has already started")
-label_1.pack()
-label_2.pack()
-label_3.pack()
-label_4.pack()
-label_5.pack()
-label_6.pack()
 
-wn = turtle.Screen()
-wn.title("Quad Pong")
-wn.bgcolor("grey")
-wn.setup(width=1000, height=800)
-wn.tracer(0)
+win = Screen()
+win.title("Quad Pong")
+win.bgcolor("grey")
+win.setup(width=1000, height=800)
+win.tracer(0)
 
 #Border
-bd = turtle.Turtle()
+bd = Turtle()
 bd.penup()
 bd.goto(-370,-270)
 bd.pendown()
@@ -57,57 +35,57 @@ score_1 = 0
 score_2 = 0
 
 #Paddle A
-paddle_a = paddle.paddle("red", "v", -340, 0)
+paddle_a = paddle("red", "v", -340, 0)
 
 #Paddle B
-paddle_b = paddle.paddle("blue", "v", 340, 0)
+paddle_b = paddle("blue", "v", 340, 0)
 
 #Paddle C
-paddle_c = paddle.paddle("green", "h", 0, 250)
+paddle_c = paddle("green", "h", 0, 250)
 
 #Paddle D
-paddle_d = paddle.paddle("purple", "h", 0, -250)
+paddle_d = paddle("purple", "h", 0, -250)
 
 
 #Ball
-ball = turtle.Turtle()
+ball = Turtle()
 ball.speed(0)
 ball.shape("circle")
 ball.color("black")
 ball.penup()
 ball.goto(0, 0)
-ball.dx = 1
-ball.dy = 1
+ball.dx = 2
+ball.dy = 2
 
 #Pen
-pen = turtle.Turtle()
+pen = Turtle()
 pen.speed(0)
 pen.shape("square")
 pen.color("white")
 pen.penup()
 pen.hideturtle()
 pen.goto(0, 350)
-pen.write("Player RED: 0  Player BLUE: 0", align="center", font=("Courier", 19, "bold"))
+pen.write("Team 1: 0  Team 2: 0", align="center", font=("Courier", 19, "bold"))
 
 
 #Keyboard Bindings
-wn.listen()
+win.listen()
 
-wn.onkeypress(paddle_a.paddle_up, "w")
-wn.onkeypress(paddle_a.paddle_down, "s")
-wn.onkeypress(paddle_b.paddle_up, "Up")
-wn.onkeypress(paddle_b.paddle_down, "Down")
+win.onkeypress(paddle_a.paddle_up, "w")
+win.onkeypress(paddle_a.paddle_down, "s")
+win.onkeypress(paddle_b.paddle_up, "Up")
+win.onkeypress(paddle_b.paddle_down, "Down")
 
-wn.onkeypress(paddle_c.paddle_left, "a")
-wn.onkeypress(paddle_c.paddle_right, "d")
-wn.onkeypress(paddle_d.paddle_left, "Left")
-wn.onkeypress(paddle_d.paddle_right, "Right")
+win.onkeypress(paddle_c.paddle_left, "a")
+win.onkeypress(paddle_c.paddle_right, "d")
+win.onkeypress(paddle_d.paddle_left, "Left")
+win.onkeypress(paddle_d.paddle_right, "Right")
 
 
 
 # ___MAIN___
 while True:
-    wn.update()
+    win.update()
     
     #Ball Location
     ball.setx(ball.xcor() + ball.dx)
