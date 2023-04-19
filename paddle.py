@@ -5,42 +5,42 @@ from tkinter import *
 
 class paddle:
     MVMT_VALUE = 50
-    obj = turtle.Turtle()
-
     def __init__(self, color, orientation, size, speed, x, y):
+        self.turtle = turtle.Turtle()
         self.orientation = orientation
         self.x = x 
         self.y = y 
-        self.obj.speed(speed)
-        self.obj.shape("square")
-        self.obj.color(color)
+        self.turtle.speed(speed)
+        self.turtle.shape("square")
+        self.turtle.color(color)
         if(orientation == "v" or orientation == "V"):
-            self.obj.shapesize(stretch_wid=size,stretch_len=1)
+            self.turtle.shapesize(stretch_wid=size,stretch_len=1)
         elif(orientation == "h" or orientation == "H"):
-            self.obj.shapesize(stretch_wid=1,stretch_len=size)
+            self.turtle.shapesize(stretch_wid=1,stretch_len=size)
         else:
             print("Unknown orientation!!")
-        self.obj.penup()
-        self.obj.goto(x,y)
+        self.turtle.penup()
+        self.turtle.goto(x,y)
+        self.turtle.pendown()
 
     def paddle_up(self):
-        y = self.obj.ycor()
-        print()
-        y += self.MVMT_VALUE
-        self.obj.sety(y)
+        self.y = self.y + self.MVMT_VALUE
+        self.turtle.penup()
+        self.turtle.goto(self.x, self.y)
+        self.turtle.pendown()
 
 
     def paddle_down(self):
-        y = self.obj.ycor()
+        y = self.turtle.ycor()
         y -= self.MVMT_VALUE
-        self.obj.sety(y)
+        self.turtle.sety(y)
 
     def paddle_left(self):
-        x = self.obj.xcor()
+        x = self.turtle.xcor()
         x -= self.MVMT_VALUE
-        self.obj.setx(x)    
+        self.turtle.setx(x)    
 
     def paddle_right(self):
-        x = self.obj.xcor()
+        x = self.turtle.xcor()
         x += self.MVMT_VALUE
-        self.obj.setx(x)    
+        self.turtle.setx(x)    

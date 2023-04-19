@@ -201,11 +201,11 @@ while True:
     
 
     #bounds
-    if pad_a.obj.ycor() >= 240:
-        pad_a.obj.sety(225)
+    if pad_a.turtle.ycor() >= 240:
+        pad_a.turtle.sety(225)
     
-    elif pad_a.obj.ycor() <= -240:
-        pad_a.obj.sety(-225)
+    elif pad_a.turtle.ycor() <= -240:
+        pad_a.turtle.sety(-225)
 
     if paddle_b.ycor() >= 240:
         paddle_b.sety(225)
@@ -229,7 +229,7 @@ while True:
 
     #Collision w Ball
     #RED PADDLE 
-    if ball.xcor() < -320 and ball.ycor() < pad_a.obj.ycor() + 50 and ball.ycor() > pad_a.obj.ycor() - 50:
+    if ball.xcor() < -320 and ball.ycor() < pad_a.y + 50 and ball.ycor() > pad_a.y - 50:
         ball.dx *= -1 
 
     #BLUE PADDLE 
