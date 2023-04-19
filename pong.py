@@ -57,34 +57,16 @@ score_1 = 0
 score_2 = 0
 
 #Paddle A
-pad_a = paddle.paddle("red", "v", 4, 3, -340, 0)
+paddle_a = paddle.paddle("red", "v", -340, 0)
 
 #Paddle B
-paddle_b = turtle.Turtle()
-paddle_b.speed(3)
-paddle_b.shape("square")
-paddle_b.color("blue")
-paddle_b.shapesize(stretch_wid=4,stretch_len=1)
-paddle_b.penup()
-paddle_b.goto(340, 0)
+paddle_b = paddle.paddle("blue", "v", 340, 0)
 
 #Paddle C
-paddle_c = turtle.Turtle()
-paddle_c.speed(3)
-paddle_c.shape("square")
-paddle_c.color("green")
-paddle_c.shapesize(stretch_wid=1,stretch_len=4)
-paddle_c.penup()
-paddle_c.goto(0, 250)
+paddle_c = paddle.paddle("green", "h", 0, 250)
 
 #Paddle D
-paddle_d = turtle.Turtle()
-paddle_d.speed(3)
-paddle_d.shape("square")
-paddle_d.color("purple")
-paddle_d.shapesize(stretch_wid=1,stretch_len=4)
-paddle_d.penup()
-paddle_d.goto(0, -250)
+paddle_d = paddle.paddle("purple", "h", 0, -250)
 
 
 #Ball
@@ -107,57 +89,19 @@ pen.hideturtle()
 pen.goto(0, 350)
 pen.write("Player RED: 0  Player BLUE: 0", align="center", font=("Courier", 19, "bold"))
 
-# ---Moving Paddles--- 
-# Numbers mean how many increments the paddle moves for respective paddle direction.
-
-#Paddle B
-def paddle_b_up():
-    y = paddle_b.ycor()
-    y += 50
-    paddle_b.sety(y)
-
-def paddle_b_down():
-    y = paddle_b.ycor()
-    y -= 50
-    paddle_b.sety(y)
-
-#Paddle C
-def paddle_c_right():
-    x = paddle_c.xcor()
-    x += 50
-    paddle_c.setx(x)
-
-def paddle_c_left():
-    x = paddle_c.xcor()
-    x -= 50
-    paddle_c.setx(x)
-
-#Paddle D
-def paddle_d_right():
-    x = paddle_d.xcor()
-    x += 50
-    paddle_d.setx(x)
-
-def paddle_d_left():
-    x = paddle_d.xcor()
-    x -= 50
-    paddle_d.setx(x)
-
-def start_key():
-    start = start_key
 
 #Keyboard Bindings
 wn.listen()
 
-wn.onkeypress(pad_a.paddle_up(), "w")
-wn.onkeypress(pad_a.paddle_down(), "s")
-wn.onkeypress(paddle_b_up, "Up")
-wn.onkeypress(paddle_b_down, "Down")
+wn.onkeypress(paddle_a.paddle_up, "w")
+wn.onkeypress(paddle_a.paddle_down, "s")
+wn.onkeypress(paddle_b.paddle_up, "Up")
+wn.onkeypress(paddle_b.paddle_down, "Down")
 
-wn.onkeypress(paddle_c_left, "a")
-wn.onkeypress(paddle_c_right, "d")
-wn.onkeypress(paddle_d_left, "Left")
-wn.onkeypress(paddle_d_right, "Right")
+wn.onkeypress(paddle_c.paddle_left, "a")
+wn.onkeypress(paddle_c.paddle_right, "d")
+wn.onkeypress(paddle_d.paddle_left, "Left")
+wn.onkeypress(paddle_d.paddle_right, "Right")
 
 
 
@@ -201,47 +145,47 @@ while True:
     
 
     #bounds
-    if pad_a.turtle.ycor() >= 240:
-        pad_a.turtle.sety(225)
+    if paddle_a.turtle.ycor() >= 240:
+        paddle_a.turtle.sety(225)
     
-    elif pad_a.turtle.ycor() <= -240:
-        pad_a.turtle.sety(-225)
+    elif paddle_a.turtle.ycor() <= -240:
+        paddle_a.turtle.sety(-225)
 
-    if paddle_b.ycor() >= 240:
-        paddle_b.sety(225)
+    if paddle_b.turtle.ycor() >= 240:
+        paddle_b.turtle.sety(225)
 
-    elif paddle_b.ycor() <= -240:
-        paddle_b.sety(-225)
+    elif paddle_b.turtle.ycor() <= -240:
+        paddle_b.turtle.sety(-225)
 
-    if paddle_c.xcor() >= 320:
-        paddle_c.setx(320)
+    if paddle_c.turtle.xcor() >= 320:
+        paddle_c.turtle.setx(320)
 
-    elif paddle_c.xcor() <= -320:
-        paddle_c.setx(-320)
+    elif paddle_c.turtle.xcor() <= -320:
+        paddle_c.turtle.setx(-320)
 
-    if paddle_d.xcor() >= 320:
-        paddle_d.setx(320)
+    if paddle_d.turtle.xcor() >= 320:
+        paddle_d.turtle.setx(320)
 
-    elif paddle_d.xcor() <= -320:
-        paddle_d.setx(-320)
+    elif paddle_d.turtle.xcor() <= -320:
+        paddle_d.turtle.setx(-320)
     
     
 
     #Collision w Ball
     #RED PADDLE 
-    if ball.xcor() < -320 and ball.ycor() < pad_a.y + 50 and ball.ycor() > pad_a.y - 50:
+    if ball.xcor() < -320 and ball.ycor() < paddle_a.turtle.ycor() + 50 and ball.ycor() > paddle_a.turtle.ycor() - 50:
         ball.dx *= -1 
 
     #BLUE PADDLE 
-    elif ball.xcor() > 320 and ball.ycor() < paddle_b.ycor() + 50 and ball.ycor() > paddle_b.ycor() - 50:
+    elif ball.xcor() > 320 and ball.ycor() < paddle_b.turtle.ycor() + 50 and ball.ycor() > paddle_b.turtle.ycor() - 50:
         ball.dx *= -1
 
     # GREEN PADDLE
-    elif ball.ycor() > 230 and ball.xcor() < paddle_c.xcor() + 50 and ball.xcor() > paddle_c.xcor() - 50:
+    elif ball.ycor() > 230 and ball.xcor() < paddle_c.turtle.xcor() + 50 and ball.xcor() > paddle_c.turtle.xcor() - 50:
         ball.dy *= -1
 
     # PURPLE PADDLE
-    elif ball.ycor() < -230 and ball.xcor() < paddle_d.xcor() + 50 and ball.xcor() > paddle_d.xcor() - 50:
+    elif ball.ycor() < -230 and ball.xcor() < paddle_d.turtle.xcor() + 50 and ball.xcor() > paddle_d.turtle.xcor() - 50:
         ball.dy *= -1
         
     #Paddle w Paddle 
