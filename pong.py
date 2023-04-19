@@ -5,13 +5,13 @@
 from turtle import Screen, Turtle
 import os
 import time
-from Paddle import paddle
+from gameObjs import paddle, ball
 
 
 
 win = Screen()
 win.title("Quad Pong")
-win.bgcolor("grey")
+win.bgcolor("dark grey")
 win.setup(width=1000, height=800)
 win.tracer(0)
 
@@ -48,14 +48,7 @@ paddle_d = paddle("purple", "h", 0, -250)
 
 
 #Ball
-ball = Turtle()
-ball.speed(0)
-ball.shape("circle")
-ball.color("black")
-ball.penup()
-ball.goto(0, 0)
-ball.dx = 2
-ball.dy = 2
+ball_1 = ball(1)
 
 #Pen
 pen = Turtle()
@@ -88,84 +81,92 @@ while True:
     win.update()
     
     #Ball Location
-    ball.setx(ball.xcor() + ball.dx)
-    ball.sety(ball.ycor() + ball.dy)
+    ball_1.move()
     time.sleep(1/1000)
 
     #Scoring 
-    if ball.xcor() > 370:
+    if ball_1.getx() > 370:
         score_1 += 1
         pen.clear()
         pen.write("Team 1: {}  Team 2: {} ".format(score_1, score_2), align="center", font=("Courier", 19, "bold"))
-        ball.goto(0, 0)
-        ball.dx *= -1
+        ball_1.reset()
+        ball_1.dx *= -1
 
-    elif ball.xcor() < -370:
+    elif ball_1.getx() < -370:
         score_2 += 1
         pen.clear()
         pen.write("Team 1: {}  Team 2: {} ".format(score_1, score_2), align="center", font=("Courier", 19, "bold"))
-        ball.goto(0, 0)
-        ball.dx *= -1
+        ball_1.reset()
+        ball_1.dx *= -1
 
-    elif ball.ycor() > 260:
+    elif ball_1.gety() > 260:
         score_1 += 1
         pen.clear()
         pen.write("Team 1: {}  Team 2: {} ".format(score_1, score_2), align="center", font=("Courier", 19, "bold"))
-        ball.goto(0, 0)
-        ball.dy *= -1
+        ball_1.reset()
+        ball_1.dy *= -1
     
-    elif ball.ycor() < -260:
+    elif ball_1.gety() < -260:
         score_2 += 1
         pen.clear()
         pen.write("Team 1: {}  Team 2: {} ".format(score_1, score_2), align="center", font=("Courier", 19, "bold"))
-        ball.goto(0, 0)
-        ball.dy *= -1
+        ball_1.reset()
+        ball_1.dy *= -1
     
 
     #bounds
-    if paddle_a.turtle.ycor() >= 240:
-        paddle_a.turtle.sety(225)
+    if paddle_a.gety() >= 240:
+        paddle_a.sety(225)
     
-    elif paddle_a.turtle.ycor() <= -240:
-        paddle_a.turtle.sety(-225)
+    elif paddle_a.gety() <= -240:
+        paddle_a.sety(-225)
 
-    if paddle_b.turtle.ycor() >= 240:
-        paddle_b.turtle.sety(225)
+    if paddle_b.gety() >= 240:
+        paddle_b.sety(225)
 
-    elif paddle_b.turtle.ycor() <= -240:
-        paddle_b.turtle.sety(-225)
+    elif paddle_b.gety() <= -240:
+        paddle_b.sety(-225)
 
-    if paddle_c.turtle.xcor() >= 320:
-        paddle_c.turtle.setx(320)
+    if paddle_c.getx() >= 310:
+        paddle_c.setx(310)
 
-    elif paddle_c.turtle.xcor() <= -320:
-        paddle_c.turtle.setx(-320)
+    elif paddle_c.getx() <= -310:
+        paddle_c.setx(-310)
 
-    if paddle_d.turtle.xcor() >= 320:
-        paddle_d.turtle.setx(320)
+    if paddle_d.getx() >= 310:
+        paddle_d.setx(310)
 
-    elif paddle_d.turtle.xcor() <= -320:
-        paddle_d.turtle.setx(-320)
+    elif paddle_d.getx() <= -310:
+        paddle_d.setx(-310)
     
     
 
     #Collision w Ball
     #RED PADDLE 
-    if ball.xcor() < -320 and ball.ycor() < paddle_a.turtle.ycor() + 50 and ball.ycor() > paddle_a.turtle.ycor() - 50:
-        ball.dx *= -1 
+    if ball_1.getx() < -317 and ball_1.gety() < paddle_a.gety() + 50 and ball_1.gety() > paddle_a.gety() - 50:
+        #prevent side clipping 
+        ball_1.setx(-317)
+        ball_1.dx *= -1 
 
     #BLUE PADDLE 
-    elif ball.xcor() > 320 and ball.ycor() < paddle_b.turtle.ycor() + 50 and ball.ycor() > paddle_b.turtle.ycor() - 50:
-        ball.dx *= -1
+    elif ball_1.getx() > 317 and ball_1.gety() < paddle_b.gety() + 50 and ball_1.gety() > paddle_b.gety() - 50:
+        #prevent side clipping 
+        ball_1.setx(317)
+        ball_1.dx *= -1
 
     # GREEN PADDLE
-    elif ball.ycor() > 230 and ball.xcor() < paddle_c.turtle.xcor() + 50 and ball.xcor() > paddle_c.turtle.xcor() - 50:
-        ball.dy *= -1
+    elif ball_1.gety() > 230 and ball_1.getx() < paddle_c.getx() + 60 and ball_1.getx() > paddle_c.getx() - 60:
+        #prevent side clipping 
+        ball_1.sety(230)
+        ball_1.dy *= -1
 
     # PURPLE PADDLE
-    elif ball.ycor() < -230 and ball.xcor() < paddle_d.turtle.xcor() + 50 and ball.xcor() > paddle_d.turtle.xcor() - 50:
-        ball.dy *= -1
-        
+    elif ball_1.gety() < -230 and ball_1.getx() < paddle_d.getx() + 60 and ball_1.getx() > paddle_d.getx() - 60:
+        #prevent side clipping 
+        ball_1.sety(-230)
+        ball_1.dy *= -1
+
+
     #Paddle w Paddle 
     
     #TODO add proper paddle collision
