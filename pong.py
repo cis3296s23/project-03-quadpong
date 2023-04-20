@@ -1,5 +1,5 @@
 # ___QUAD PONG___
-#Domenic Malinsky, Rishi Duggal, Tyler Grenell 2023
+# Domenic Malinsky, Rishi Duggal, Tyler Grenell 2023
 
 
 from turtle import Screen, Turtle
@@ -8,168 +8,219 @@ import time
 from gameObjs import paddle, ball
 
 
+class gameRunner:
+    def __init__(self, gamemode, points_to_win, ball_count, ball_speed):
 
-win = Screen()
-win.title("Quad Pong")
-win.bgcolor("dark grey")
-win.setup(width=1000, height=800)
-win.tracer(0)
+        self.gamemode = gamemode
+        self.wincon = points_to_win
 
-#Border
-bd = Turtle()
-bd.penup()
-bd.goto(-370,-270)
-bd.pendown()
-bd.pensize(5)
-bd.fd(740)
-bd.left(90)
-bd.fd(540)
-bd.left(90)
-bd.fd(740)
-bd.left(90)
-bd.fd(540)
-bd.hideturtle()
+        self.win = Screen()
+        self.win.title("Quad Pong")
+        self.win.bgcolor("dark grey")
+        self.win.setup(width=1000, height=800)
+        self.win.tracer(0)
 
-#Score
-score_1 = 0
-score_2 = 0
+        self.bd = Turtle()
+        self.bd.penup()
+        self.bd.goto(-370, -270)
+        self.bd.pendown()
+        self.bd.pensize(5)
+        self.bd.fd(740)
+        self.bd.left(90)
+        self.bd.fd(540)
+        self.bd.left(90)
+        self.bd.fd(740)
+        self.bd.left(90)
+        self.bd.fd(540)
+        self.bd.hideturtle()
 
-#Paddle A
-paddle_a = paddle("red", "v", -340, 0)
+        if (gamemode == "twoplayer"):
+            # TODO make these functions
+            twoPlayerInit()
+        elif (gamemode == "fourplayer"):
+            fourPlayerInit()
 
-#Paddle B
-paddle_b = paddle("blue", "v", 340, 0)
+        self.pen = Turtle()
+        self.pen.speed(0)
+        self.pen.shape("square")
+        self.pen.color("white")
+        self.pen.penup()
+        self.pen.hideturtle()
+        self.pen.goto(0, 350)
 
-#Paddle C
-paddle_c = paddle("green", "h", 0, 250)
+        self.balls = ball[ball_count]
 
-#Paddle D
-paddle_d = paddle("purple", "h", 0, -250)
+        for x in self.balls:
+            x = ball(ball_speed)
 
-
-#Ball
-ball_1 = ball(1)
-
-#Pen
-pen = Turtle()
-pen.speed(0)
-pen.shape("square")
-pen.color("white")
-pen.penup()
-pen.hideturtle()
-pen.goto(0, 350)
-pen.write("Team 1: 0  Team 2: 0", align="center", font=("Courier", 19, "bold"))
-
-
-#Keyboard Bindings
-win.listen()
-
-win.onkeypress(paddle_a.paddle_up, "w")
-win.onkeypress(paddle_a.paddle_down, "s")
-win.onkeypress(paddle_b.paddle_up, "Up")
-win.onkeypress(paddle_b.paddle_down, "Down")
-
-win.onkeypress(paddle_c.paddle_left, "a")
-win.onkeypress(paddle_c.paddle_right, "d")
-win.onkeypress(paddle_d.paddle_left, "Left")
-win.onkeypress(paddle_d.paddle_right, "Right")
-
-
-
-# ___MAIN___
-while True:
-    win.update()
-    
-    #Ball Location
-    ball_1.move()
-    time.sleep(1/1000)
-
-    #Scoring 
-    if ball_1.getx() > 370:
-        score_1 += 1
-        pen.clear()
-        pen.write("Team 1: {}  Team 2: {} ".format(score_1, score_2), align="center", font=("Courier", 19, "bold"))
-        ball_1.reset()
-        ball_1.dx *= -1
-
-    elif ball_1.getx() < -370:
-        score_2 += 1
-        pen.clear()
-        pen.write("Team 1: {}  Team 2: {} ".format(score_1, score_2), align="center", font=("Courier", 19, "bold"))
-        ball_1.reset()
-        ball_1.dx *= -1
-
-    elif ball_1.gety() > 260:
-        score_1 += 1
-        pen.clear()
-        pen.write("Team 1: {}  Team 2: {} ".format(score_1, score_2), align="center", font=("Courier", 19, "bold"))
-        ball_1.reset()
-        ball_1.dy *= -1
-    
-    elif ball_1.gety() < -260:
-        score_2 += 1
-        pen.clear()
-        pen.write("Team 1: {}  Team 2: {} ".format(score_1, score_2), align="center", font=("Courier", 19, "bold"))
-        ball_1.reset()
-        ball_1.dy *= -1
-    
-
-    #bounds
-    if paddle_a.gety() >= 240:
-        paddle_a.sety(225)
-    
-    elif paddle_a.gety() <= -240:
-        paddle_a.sety(-225)
-
-    if paddle_b.gety() >= 240:
-        paddle_b.sety(225)
-
-    elif paddle_b.gety() <= -240:
-        paddle_b.sety(-225)
-
-    if paddle_c.getx() >= 310:
-        paddle_c.setx(310)
-
-    elif paddle_c.getx() <= -310:
-        paddle_c.setx(-310)
-
-    if paddle_d.getx() >= 310:
-        paddle_d.setx(310)
-
-    elif paddle_d.getx() <= -310:
-        paddle_d.setx(-310)
+        runGame()
     
     
-
-    #Collision w Ball
-    #RED PADDLE 
-    if ball_1.getx() < -317 and ball_1.gety() < paddle_a.gety() + 50 and ball_1.gety() > paddle_a.gety() - 50:
-        #prevent side clipping 
-        ball_1.setx(-317)
-        ball_1.dx *= -1 
-
-    #BLUE PADDLE 
-    elif ball_1.getx() > 317 and ball_1.gety() < paddle_b.gety() + 50 and ball_1.gety() > paddle_b.gety() - 50:
-        #prevent side clipping 
-        ball_1.setx(317)
-        ball_1.dx *= -1
-
-    # GREEN PADDLE
-    elif ball_1.gety() > 230 and ball_1.getx() < paddle_c.getx() + 60 and ball_1.getx() > paddle_c.getx() - 60:
-        #prevent side clipping 
-        ball_1.sety(230)
-        ball_1.dy *= -1
-
-    # PURPLE PADDLE
-    elif ball_1.gety() < -230 and ball_1.getx() < paddle_d.getx() + 60 and ball_1.getx() > paddle_d.getx() - 60:
-        #prevent side clipping 
-        ball_1.sety(-230)
-        ball_1.dy *= -1
-
-
-    #Paddle w Paddle 
     
-    #TODO add proper paddle collision
+    def twoPlayerInit(self):
+        # TODO make this function
+        
+        self.score1 = 0
+        self.score2 = 0
 
-   
-    
+        self.pen.write("Team 1: 0  Team 2: 0", align="center", font=("Courier", 19, "bold"))
+
+        #Paddle A
+        self.paddle_a = paddle("red", "v", -340, 0)
+
+        #Paddle B
+        self.paddle_b = paddle("blue", "v", 340, 0)
+
+        self.win.listen()
+        self.win.onkeypress(self.paddle_a.paddle_up, "w")
+        self.win.onkeypress(self.paddle_a.paddle_down, "s")
+        self.win.onkeypress(self.paddle_b.paddle_up, "Up")
+        self.win.onkeypress(self.paddle_b.paddle_down, "Down")
+
+
+    def fourPlayerInit(self):
+        # TODO make this function
+        self.win.listen()
+        self.score1 = 0
+        self.score2 = 0
+        self.pen.write("Team 1: 0  Team 2: 0", align="center", font=("Courier", 19, "bold"))
+
+        #Paddle A
+        self.paddle_a = paddle("red", "v", -340, 0)
+
+        #Paddle B
+        self.paddle_b = paddle("blue", "v", 340, 0)
+
+        #Paddle C
+        self.paddle_c = paddle("green", "h", 0, 250)
+
+        #Paddle D
+        self.paddle_d = paddle("purple", "h", 0, -250)
+        
+        self.win.listen()
+
+        self.win.onkeypress(self.paddle_a.paddle_up, "w")
+        self.win.onkeypress(self.paddle_a.paddle_down, "s")
+        self.win.onkeypress(self.paddle_b.paddle_up, "Up")
+        self.win.onkeypress(self.paddle_b.paddle_down, "Down")
+
+        self.win.onkeypress(self.paddle_c.paddle_left, "a")
+        self.win.onkeypress(self.paddle_c.paddle_right, "d")
+        self.win.onkeypress(self.paddle_d.paddle_left, "Left")
+        self.win.onkeypress(self.paddle_d.paddle_right, "Right")
+
+    def checkIfScore(self, ball):
+        if (self.gamemode == "twoplayer"):
+            if ball.getx() > 370:
+                self.score_1 += 1
+                self.pen.clear()
+                self.pen.write("Team 1: {}  Team 2: {} ".format(self.score_1, self.score_2), align="center",
+                               font=("Courier", 19, "bold"))
+                ball.reset()
+                ball.dx *= -1
+
+            elif ball.getx() < -370:
+                self.score_2 += 1
+                self.pen.clear()
+                self.pen.write("Team 1: {}  Team 2: {} ".format(self.score_1, self.score_2), align="center",
+                               font=("Courier", 19, "bold"))
+                ball.reset()
+                ball.dx *= -1
+
+        elif (self.gamemode == "fourplayer"):
+            if ball.getx() > 370:
+                self.score_1 += 1
+                self.pen.clear()
+                self.pen.write("Team 1: {}  Team 2: {} ".format(self.score_1, self.score_2), align="center",
+                               font=("Courier", 19, "bold"))
+                ball.reset()
+                ball.dx *= -1
+
+            elif ball.getx() < -370:
+                self.score_2 += 1
+                self.pen.clear()
+                self.pen.write("Team 1: {}  Team 2: {} ".format(self.score_1, self.score_2), align="center",
+                               font=("Courier", 19, "bold"))
+                ball.reset()
+                ball.dx *= -1
+
+            elif ball.gety() > 260:
+                self.score_1 += 1
+                self.pen.clear()
+                self.pen.write("Team 1: {}  Team 2: {} ".format(self.score_1, self.score_2), align="center",
+                               font=("Courier", 19, "bold"))
+                ball.reset()
+                ball.dy *= -1
+
+            elif ball.gety() < -260:
+                self.score_2 += 1
+                self.pen.clear()
+                self.pen.write("Team 1: {}  Team 2: {} ".format(self.score_1, self.score_2), align="center",
+                               font=("Courier", 19, "bold"))
+                ball.reset()
+                ball.dy *= -1
+
+    def checkCollisions(self, ball):
+
+        if (self.gamemode == "twoplayer"):
+
+            # RED PADDLE
+            if ball.getx() < -317 and ball.gety() < self.paddle_a.gety() + 50 and ball.gety() > self.paddle_a.gety() - 50:
+                # prevent side clipping
+                ball.setx(-317)
+                ball.dx *= -1
+
+                # BLUE PADDLE
+            elif ball.getx() > 317 and ball.gety() < self.paddle_b.gety() + 50 and ball.gety() > self.paddle_b.gety() - 50:
+                # prevent side clipping
+                ball.setx(317)
+                ball.dx *= -1
+
+        elif (self.gamemode == "fourplayer"):
+
+            # RED PADDLE
+            if ball.getx() < -317 and ball.gety() < self.paddle_a.gety() + 50 and ball.gety() > self.paddle_a.gety() - 50:
+                # prevent side clipping
+                ball.setx(-317)
+                ball.dx *= -1
+
+            # BLUE PADDLE
+            elif ball.getx() > 317 and ball.gety() < self.paddle_b.gety() + 50 and ball.gety() > self.paddle_b.gety() - 50:
+                # prevent side clipping
+                ball.setx(317)
+                ball.dx *= -1
+
+            # GREEN PADDLE
+            elif ball.gety() > 230 and ball.getx() < self.paddle_c.getx() + 60 and ball.getx() > self.paddle_c.getx() - 60:
+                # prevent side clipping
+                ball.sety(230)
+                ball.dy *= -1
+
+            # PURPLE PADDLE
+            elif ball.gety() < -230 and ball.getx() < self.paddle_d.getx() + 60 and ball.getx() > self.paddle_d.getx() - 60:
+                # prevent side clipping
+                ball.sety(-230)
+                ball.dy *= -1
+
+    def runGame(self):
+        # TODO make the internal function
+
+        while True:
+
+            self.win.update
+
+            for x in self.balls:
+                x.move()
+
+                # Scoring
+                checkIfScore(self, x)
+
+                #Collisions
+                checkCollisions(self, x)
+
+            
+            time.sleep(1/100)
+
+
+
+        # TODO handle scoring and collision based on gamemode flag. If statements, or new methods, preferable.
