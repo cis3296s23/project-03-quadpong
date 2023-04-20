@@ -73,6 +73,9 @@ while True:
     ball_1.move()
     time.sleep(1/1000)
 
+<didn't refactor past here>
+
+
     #Scoring 
     if ball_1.getx() > 370:
         score_1 += 1
