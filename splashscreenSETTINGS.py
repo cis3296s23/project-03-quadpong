@@ -1,10 +1,9 @@
 import pygame
-
+import os
 import splashscreen
 
 
 def SETTINGS():
-
     # initialize pygame
     pygame.init()
 
@@ -16,6 +15,9 @@ def SETTINGS():
     # set small window size
     small_win_width = int(win_width / 3.2)
     small_win_height = int(win_height / 3.2)
+
+    # center window
+    os.environ['SDL_VIDEO_CENTERED'] = '0'
 
     # create small window
     small_window = pygame.display.set_mode((small_win_width, small_win_height))
