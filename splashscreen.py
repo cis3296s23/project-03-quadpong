@@ -1,5 +1,7 @@
 import pygame
 import splashscreenSETTINGS
+from gameRunner import gameRunner
+from gameObjs import ball, paddle
 
 def splashscreen():
 
@@ -44,6 +46,8 @@ def splashscreen():
     button_pos = button_text.get_rect()
     button_pos.bottomright = (win_width - 50, win_height - 50)
 
+    game = None
+
     # display splash screen until user clicks exit button or closes the window
     while True:
         # check for events
@@ -58,9 +62,17 @@ def splashscreen():
                     pygame.quit()
                     quit()
                 elif option1_pos.collidepoint(event.pos): # if user clicks option 1
-                    print("2 Player Selected(Add path for game later)")
+                    print("2 Player Selected")
+                    pygame.quit()
+                    game = gameRunner("twoplayer", 1, 1, 1)
+                    game = None
+
+                    
                 elif option2_pos.collidepoint(event.pos): # if user clicks option 2
-                    print("4 Player Selected(Add path for game later)")
+                    pygame.quit()
+                    game = gameRunner("fourplayer", 1, 1, 1)
+                    game = None
+                    
                 elif settings_pos.collidepoint(event.pos): # if user clicks settings button
                     splashscreenSETTINGS.SETTINGS()
                     print("Settings Selected(Add code for settings window later)")

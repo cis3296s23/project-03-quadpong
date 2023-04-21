@@ -1,3 +1,10 @@
+
+from turtle import Screen, Turtle
+import os
+import time
+from gameObjs import paddle, ball
+
+
 win = Screen()
 win.title("Quad Pong")
 win.bgcolor("dark grey")
@@ -72,8 +79,6 @@ while True:
     #Ball Location
     ball_1.move()
     time.sleep(1/1000)
-
-<didn't refactor past here>
 
 
     #Scoring 
