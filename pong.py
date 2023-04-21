@@ -34,11 +34,16 @@ class gameRunner:
         self.bd.fd(540)
         self.bd.hideturtle()
 
-        if (gamemode == "twoplayer"):
-            # TODO make these functions
-            twoPlayerInit()
-        elif (gamemode == "fourplayer"):
-            fourPlayerInit()
+        if(gamemode == "twoplayer"):
+            self.twoPlayerInit()
+        elif(gamemode == "fourplayer"):
+            self.fourPlayerInit()    
+        
+        self.balls = []
+
+        for x in range(ball_count):
+            self.balls.append(ball(ball_speed))
+           
 
         self.pen = Turtle()
         self.pen.speed(0)
@@ -47,13 +52,10 @@ class gameRunner:
         self.pen.penup()
         self.pen.hideturtle()
         self.pen.goto(0, 350)
+        self.pen.write("Team 1: 0  Team 2: 0", align="center", font=("Courier", 19, "bold"))
 
-        self.balls = ball[ball_count]
 
-        for x in self.balls:
-            x = ball(ball_speed)
-
-        runGame()
+        self.runGame()
     
     
     
@@ -62,8 +64,6 @@ class gameRunner:
         
         self.score1 = 0
         self.score2 = 0
-
-        self.pen.write("Team 1: 0  Team 2: 0", align="center", font=("Courier", 19, "bold"))
 
         #Paddle A
         self.paddle_a = paddle("red", "v", -340, 0)
@@ -80,10 +80,8 @@ class gameRunner:
 
     def fourPlayerInit(self):
         # TODO make this function
-        self.win.listen()
         self.score1 = 0
         self.score2 = 0
-        self.pen.write("Team 1: 0  Team 2: 0", align="center", font=("Courier", 19, "bold"))
 
         #Paddle A
         self.paddle_a = paddle("red", "v", -340, 0)
@@ -112,50 +110,50 @@ class gameRunner:
     def checkIfScore(self, ball):
         if (self.gamemode == "twoplayer"):
             if ball.getx() > 370:
-                self.score_1 += 1
+                self.score1 += 1
                 self.pen.clear()
-                self.pen.write("Team 1: {}  Team 2: {} ".format(self.score_1, self.score_2), align="center",
+                self.pen.write("Team 1: {}  Team 2: {} ".format(self.score1, self.score2), align="center",
                                font=("Courier", 19, "bold"))
                 ball.reset()
                 ball.dx *= -1
 
             elif ball.getx() < -370:
-                self.score_2 += 1
+                self.score2 += 1
                 self.pen.clear()
-                self.pen.write("Team 1: {}  Team 2: {} ".format(self.score_1, self.score_2), align="center",
+                self.pen.write("Team 1: {}  Team 2: {} ".format(self.score1, self.score2), align="center",
                                font=("Courier", 19, "bold"))
                 ball.reset()
                 ball.dx *= -1
 
         elif (self.gamemode == "fourplayer"):
             if ball.getx() > 370:
-                self.score_1 += 1
+                self.score1 += 1
                 self.pen.clear()
-                self.pen.write("Team 1: {}  Team 2: {} ".format(self.score_1, self.score_2), align="center",
+                self.pen.write("Team 1: {}  Team 2: {} ".format(self.score1, self.score2), align="center",
                                font=("Courier", 19, "bold"))
                 ball.reset()
                 ball.dx *= -1
 
             elif ball.getx() < -370:
-                self.score_2 += 1
+                self.score2 += 1
                 self.pen.clear()
-                self.pen.write("Team 1: {}  Team 2: {} ".format(self.score_1, self.score_2), align="center",
+                self.pen.write("Team 1: {}  Team 2: {} ".format(self.score1, self.score2), align="center",
                                font=("Courier", 19, "bold"))
                 ball.reset()
                 ball.dx *= -1
 
             elif ball.gety() > 260:
-                self.score_1 += 1
+                self.score1 += 1
                 self.pen.clear()
-                self.pen.write("Team 1: {}  Team 2: {} ".format(self.score_1, self.score_2), align="center",
+                self.pen.write("Team 1: {}  Team 2: {} ".format(self.score1, self.score2), align="center",
                                font=("Courier", 19, "bold"))
                 ball.reset()
                 ball.dy *= -1
 
             elif ball.gety() < -260:
-                self.score_2 += 1
+                self.score2 += 1
                 self.pen.clear()
-                self.pen.write("Team 1: {}  Team 2: {} ".format(self.score_1, self.score_2), align="center",
+                self.pen.write("Team 1: {}  Team 2: {} ".format(self.score1, self.score2), align="center",
                                font=("Courier", 19, "bold"))
                 ball.reset()
                 ball.dy *= -1
@@ -170,11 +168,22 @@ class gameRunner:
                 ball.setx(-317)
                 ball.dx *= -1
 
-                # BLUE PADDLE
+            # BLUE PADDLE
             elif ball.getx() > 317 and ball.gety() < self.paddle_b.gety() + 50 and ball.gety() > self.paddle_b.gety() - 50:
                 # prevent side clipping
                 ball.setx(317)
                 ball.dx *= -1
+
+            # TOP BORDER
+            elif ball.gety() > 250:
+                ball.sety(250)
+                ball.dy *= -1
+
+            # BOTTOM BORDER
+            elif ball.gety() < -250:
+                ball.sety(-250)
+                ball.dy *= -1
+
 
         elif (self.gamemode == "fourplayer"):
 
@@ -202,24 +211,71 @@ class gameRunner:
                 ball.sety(-230)
                 ball.dy *= -1
 
+    
+    def checkPaddleBounds(self):
+        if(self.gamemode == "twoplayer"):
+            if self.paddle_a.gety() >= 240:
+                self.paddle_a.sety(225)
+    
+            elif self.paddle_a.gety() <= -240:
+                self.paddle_a.sety(-225)
+
+            if self.paddle_b.gety() >= 240:
+                self.paddle_b.sety(225)
+
+            elif self.paddle_b.gety() <= -240:
+                self.paddle_b.sety(-225)
+
+
+        elif(self.gamemode == "fourplayer"):
+            if self.paddle_a.gety() >= 240:
+                self.paddle_a.sety(225)
+    
+            elif self.paddle_a.gety() <= -240:
+                self.paddle_a.sety(-225)
+
+            if self.paddle_b.gety() >= 240:
+                self.paddle_b.sety(225)
+
+            elif self.paddle_b.gety() <= -240:
+                self.paddle_b.sety(-225)
+
+            if self.paddle_c.getx() >= 310:
+                self.paddle_c.setx(310)
+
+            elif self.paddle_c.getx() <= -310:
+                self.paddle_c.setx(-310)
+
+            if self.paddle_d.getx() >= 310:
+                self.paddle_d.setx(310)
+
+            elif self.paddle_d.getx() <= -310:
+                self.paddle_d.setx(-310)
+    
+    
+    
     def runGame(self):
         # TODO make the internal function
 
         while True:
 
-            self.win.update
+            self.win.update()
 
             for x in self.balls:
-                x.move()
 
+                x.move()
                 # Scoring
-                checkIfScore(self, x)
+                self.checkIfScore(x)
 
                 #Collisions
-                checkCollisions(self, x)
+                self.checkCollisions(x)
 
+            #BoundsChecking    
+            self.checkPaddleBounds()
+
+            time.sleep(1/1000)
             
-            time.sleep(1/100)
+           
 
 
 

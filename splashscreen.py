@@ -1,5 +1,7 @@
 import pygame
 import splashscreenSETTINGS
+from pong import gameRunner
+from gameObjs import ball, paddle
 
 def splashscreen():
 
@@ -58,9 +60,14 @@ def splashscreen():
                     pygame.quit()
                     quit()
                 elif option1_pos.collidepoint(event.pos): # if user clicks option 1
-                    print("2 Player Selected(Add path for game later)")
+                    print("2 Player Selected")
+                    pygame.quit()
+                    game = gameRunner("twoplayer", 1, 1, 1)
+                    
                 elif option2_pos.collidepoint(event.pos): # if user clicks option 2
-                    print("4 Player Selected(Add path for game later)")
+                    pygame.quit()
+                    game = gameRunner("fourplayer", 1, 1, 1)
+                    
                 elif settings_pos.collidepoint(event.pos): # if user clicks settings button
                     splashscreenSETTINGS.SETTINGS()
                     print("Settings Selected(Add code for settings window later)")
