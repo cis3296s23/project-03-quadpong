@@ -82,7 +82,7 @@ def splashscreen():
     button_pos = button_text.get_rect()
     button_pos.bottomright = (win_width - 50, win_height - 50)
 
-    game = None
+
 
     # display splash screen until user clicks exit button or closes the window
     while True:
@@ -99,20 +99,27 @@ def splashscreen():
                     quit()
 
                 elif twoPlayerClassic_pos.collidepoint(event.pos): # if user clicks two player classic
+                    pygame.quit()
                     game = gameRunner("twoplayer", 1, 1, 1)
                     game = None
-                elif twoPlayerClassic_pos.collidepoint(event.pos): # if user clicks option 1
+                    
+                elif twoPlayerRally_pos.collidepoint(event.pos): # if user clicks 2p rally
+                    pygame.quit()
                     game = gameRunner("2pRally", 1, 1, 1)
                     game = None
 
-                    
-                elif fourPlayerClassic_pos.collidepoint(event.pos): # if user clicks option 2
+                elif fourPlayerClassic_pos.collidepoint(event.pos): # if user clicks 4p classic
+                    pygame.quit()
                     game = gameRunner("fourplayer", 1, 1, 1)
                     game = None
-                elif fourPlayerFFA_pos.collidepoint(event.pos): # if user clicks option 2
+                    
+                elif fourPlayerFFA_pos.collidepoint(event.pos): # if user clicks 4p FFA
+                    pygame.quit()
                     game = gameRunner("4pFFA", 1, 1, 1)
                     game = None
-                elif fourPlayerRally_pos.collidepoint(event.pos): # if user clicks option 2
+                    
+                elif fourPlayerRally_pos.collidepoint(event.pos): # if user clicks Rally
+                    pygame.quit()
                     game = gameRunner("4pRally", 1, 1, 1)
                     game = None
                     
