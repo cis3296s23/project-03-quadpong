@@ -37,9 +37,9 @@ class gameRunner:
         self.bd.fd(540)
         self.bd.hideturtle()
 
-        if(gamemode == "twoplayer"):
+        if(gamemode == "twoplayer" or gamemode == "2pRally"):
             self.twoPlayerInit()
-        elif(gamemode == "fourplayer"):
+        elif(gamemode == "fourplayer" or gamemode == "4pRally"):
             self.fourPlayerInit()    
         
         self.balls = []
@@ -55,7 +55,12 @@ class gameRunner:
         self.pen.penup()
         self.pen.hideturtle()
         self.pen.goto(0, 350)
-        self.pen.write("Team 1: 0  Team 2: 0", align="center", font=("Courier", 19, "bold"))
+
+        if (gamemode == "2pRally" or gamemode == "4pRally"):
+            self.pen.write("Consecutive Hits: 0 ", align="center",
+                           font=("Courier", 19, "bold"))
+        elif (gamemode == "twoplayer" or "fourplayer"):
+            self.pen.write("Team 1: 0  Team 2: 0", align="center", font=("Courier", 19, "bold"))
 
         self.exit_button = Turtle()
         self.exit_button.shape("square")
@@ -146,6 +151,23 @@ class gameRunner:
                 ball.reset()
                 ball.dx *= -1
 
+        elif (self.gamemode == "2pRally"):
+            if ball.getx() > 360:
+                self.score1 = 0
+                self.pen.clear()
+                self.pen.write("Consecutive Hits: {} ".format(self.score1), align="center",
+                               font=("Courier", 19, "bold"))
+                ball.reset()
+                ball.dx *= -1
+
+            elif ball.getx() < -360:
+                self.score1 = 0
+                self.pen.clear()
+                self.pen.write("Consecutive Hits: {} ".format(self.score1), align="center",
+                               font=("Courier", 19, "bold"))
+                ball.reset()
+                ball.dx *= -1
+
         elif (self.gamemode == "fourplayer"):
             if ball.getx() > 360:
                 self.score1 += 1
@@ -179,6 +201,39 @@ class gameRunner:
                 ball.reset()
                 ball.dy *= -1
 
+        elif (self.gamemode == "4pRally"):
+            if ball.getx() > 360:
+                self.score1 = 0
+                self.pen.clear()
+                self.pen.write("Consecutive Hits: {} ".format(self.score1), align="center",
+                               font=("Courier", 19, "bold"))
+                ball.reset()
+                ball.dx *= -1
+
+            elif ball.getx() < -360:
+                self.score1 = 0
+                self.pen.clear()
+                self.pen.write("Consecutive Hits: {} ".format(self.score1), align="center",
+                               font=("Courier", 19, "bold"))
+                ball.reset()
+                ball.dx *= -1
+
+            elif ball.gety() > 260:
+                self.score1 = 0
+                self.pen.clear()
+                self.pen.write("Consecutive Hits: {} ".format(self.score1), align="center",
+                               font=("Courier", 19, "bold"))
+                ball.reset()
+                ball.dy *= -1
+
+            elif ball.gety() < -260:
+                self.score1 = 0
+                self.pen.clear()
+                self.pen.write("Consecutive Hits: {} ".format(self.score1), align="center",
+                               font=("Courier", 19, "bold"))
+                ball.reset()
+                ball.dy *= -1
+
     def checkCollisions(self, ball):
 
         if (self.gamemode == "twoplayer"):
@@ -194,6 +249,38 @@ class gameRunner:
                 # prevent side clipping
                 ball.setx(317)
                 ball.dx *= -1
+
+            # TOP BORDER
+            elif ball.gety() > 250:
+                ball.sety(250)
+                ball.dy *= -1
+
+            # BOTTOM BORDER
+            elif ball.gety() < -250:
+                ball.sety(-250)
+                ball.dy *= -1
+
+        elif (self.gamemode == "2pRally"):
+
+            # RED PADDLE
+            if ball.getx() < -317 and ball.gety() < self.paddle_a.gety() + 50 and ball.gety() > self.paddle_a.gety() - 50:
+                # prevent side clipping
+                ball.setx(-317)
+                ball.dx *= -1
+                self.score1 += 1
+                self.pen.clear()
+                self.pen.write("Consecutive Hits: {} ".format(self.score1), align="center",
+                               font=("Courier", 19, "bold"))
+
+            # BLUE PADDLE
+            elif ball.getx() > 317 and ball.gety() < self.paddle_b.gety() + 50 and ball.gety() > self.paddle_b.gety() - 50:
+                # prevent side clipping
+                ball.setx(317)
+                ball.dx *= -1
+                self.score1 += 1
+                self.pen.clear()
+                self.pen.write("Consecutive Hits: {} ".format(self.score1), align="center",
+                               font=("Courier", 19, "bold"))
 
             # TOP BORDER
             elif ball.gety() > 250:
@@ -232,9 +319,51 @@ class gameRunner:
                 ball.sety(-230)
                 ball.dy *= -1
 
+        elif (self.gamemode == "4pRally"):
+
+            # RED PADDLE
+            if ball.getx() < -317 and ball.gety() < self.paddle_a.gety() + 50 and ball.gety() > self.paddle_a.gety() - 50:
+                # prevent side clipping
+                ball.setx(-317)
+                ball.dx *= -1
+                self.score1 += 1
+                self.pen.clear()
+                self.pen.write("Consecutive Hits: {} ".format(self.score1), align="center",
+                               font=("Courier", 19, "bold"))
+
+            # BLUE PADDLE
+            elif ball.getx() > 317 and ball.gety() < self.paddle_b.gety() + 50 and ball.gety() > self.paddle_b.gety() - 50:
+                # prevent side clipping
+                ball.setx(317)
+                ball.dx *= -1
+                self.score1 += 1
+                self.pen.clear()
+                self.pen.write("Consecutive Hits: {} ".format(self.score1), align="center",
+                               font=("Courier", 19, "bold"))
+
+            # GREEN PADDLE
+            elif ball.gety() > 230 and ball.getx() < self.paddle_c.getx() + 60 and ball.getx() > self.paddle_c.getx() - 60:
+                # prevent side clipping
+                ball.sety(230)
+                ball.dy *= -1
+                self.score1 += 1
+                self.pen.clear()
+                self.pen.write("Consecutive Hits: {} ".format(self.score1), align="center",
+                               font=("Courier", 19, "bold"))
+
+            # PURPLE PADDLE
+            elif ball.gety() < -230 and ball.getx() < self.paddle_d.getx() + 60 and ball.getx() > self.paddle_d.getx() - 60:
+                # prevent side clipping
+                ball.sety(-230)
+                ball.dy *= -1
+                self.score1 += 1
+                self.pen.clear()
+                self.pen.write("Consecutive Hits: {} ".format(self.score1), align="center",
+                               font=("Courier", 19, "bold"))
+
     
     def checkPaddleBounds(self):
-        if(self.gamemode == "twoplayer"):
+        if(self.gamemode == "twoplayer" or self.gamemode == "2pRally"):
             if self.paddle_a.gety() >= 240:
                 self.paddle_a.sety(225)
     
@@ -248,7 +377,7 @@ class gameRunner:
                 self.paddle_b.sety(-225)
 
 
-        elif(self.gamemode == "fourplayer"):
+        elif(self.gamemode == "fourplayer" or self.gamemode == "4pRally"):
             if self.paddle_a.gety() >= 240:
                 self.paddle_a.sety(225)
     

@@ -63,13 +63,13 @@ def splashscreen():
                     quit()
                 elif option1_pos.collidepoint(event.pos): # if user clicks option 1
                     print("2 Player Selected")
-                    pygame.quit()
+                    #pygame.quit()
                     game = gameRunner("twoplayer", 1, 1, 1)
                     game = None
 
                     
                 elif option2_pos.collidepoint(event.pos): # if user clicks option 2
-                    pygame.quit()
+                    #pygame.quit()
                     game = gameRunner("fourplayer", 1, 1, 1)
                     game = None
                     
