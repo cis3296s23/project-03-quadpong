@@ -3,4 +3,6 @@ import splashscreen
 import pygame
 from gameRunner import gameRunner
 
-splashscreen.splashscreen() 
+splashscreen.splashscreen() #uncomment for splash screen to work, otherwise change gamerunner obj to test
+
+
