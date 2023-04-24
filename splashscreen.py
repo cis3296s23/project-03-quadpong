@@ -24,8 +24,23 @@ def splashscreen():
 
     # set text for splash screen
     title_text = big_font.render("Quad Pong", True, (255, 255, 255))
+
+
+    #2 Player Options
     option1_text = medium_font.render("2 Player", True, (255, 255, 255))
+
+    twoPlayerClassic_text = small_font.render("Classic", True, (255, 255, 255))
+    twoPlayerRally_text = small_font.render("Rally", True, (255, 255, 255))
+
+
+    #4 Player Options
     option2_text = medium_font.render("4 Player", True, (255, 255, 255))
+
+    fourPlayerClassic_text = small_font.render("Classic", True, (255, 255, 255))
+    fourPlayerRally_text = small_font.render("Rally", True, (255, 255, 255))
+    fourPlayerFFA_text = small_font.render("FFA", True, (255, 255, 255))
+
+    #Extra Options
     settings_text = small_font.render("Settings", True, (255, 255, 255))
     button_text = small_font.render("Exit", True, (255, 255, 255))
 
@@ -34,12 +49,33 @@ def splashscreen():
     title_pos.centerx = window.get_rect().centerx
     title_pos.top = 100
 
+
+    #set position for Two Player Modes
     option1_pos = option1_text.get_rect()
-    option1_pos.center = (window.get_rect().centerx, window.get_rect().centery - 50)
+    option1_pos.center = (window.get_rect().centerx, window.get_rect().centery - 80)
 
+    twoPlayerClassic_pos = twoPlayerClassic_text.get_rect()
+    twoPlayerClassic_pos.center = (window.get_rect().centerx - 100, window.get_rect().centery)
+
+    twoPlayerRally_pos = twoPlayerClassic_text.get_rect()
+    twoPlayerRally_pos.center = (window.get_rect().centerx + 150, window.get_rect().centery)
+
+
+    #set position for Four Player Modes
     option2_pos = option2_text.get_rect()
-    option2_pos.center = (window.get_rect().centerx, window.get_rect().centery + 50)
+    option2_pos.center = (window.get_rect().centerx, window.get_rect().centery + 100)
 
+    fourPlayerClassic_pos = fourPlayerClassic_text.get_rect()
+    fourPlayerClassic_pos.center = (window.get_rect().centerx - 200, window.get_rect().centery + 180)
+
+    fourPlayerFFA_pos = fourPlayerFFA_text.get_rect()
+    fourPlayerFFA_pos.center = (window.get_rect().centerx, window.get_rect().centery + 180)
+
+    fourPlayerRally_pos = fourPlayerRally_text.get_rect()
+    fourPlayerRally_pos.center = (window.get_rect().centerx + 200, window.get_rect().centery + 180)
+
+
+    #set position for other options
     settings_pos = settings_text.get_rect()
     settings_pos.bottomleft = (50, win_height - 50)
 
@@ -61,16 +97,23 @@ def splashscreen():
                 if button_pos.collidepoint(event.pos):  # if user clicks exit button
                     pygame.quit()
                     quit()
-                elif option1_pos.collidepoint(event.pos): # if user clicks option 1
-                    print("2 Player Selected")
-                    #pygame.quit()
+
+                elif twoPlayerClassic_pos.collidepoint(event.pos): # if user clicks two player classic
                     game = gameRunner("twoplayer", 1, 1, 1)
+                    game = None
+                elif twoPlayerClassic_pos.collidepoint(event.pos): # if user clicks option 1
+                    game = gameRunner("2pRally", 1, 1, 1)
                     game = None
 
                     
-                elif option2_pos.collidepoint(event.pos): # if user clicks option 2
-                    #pygame.quit()
+                elif fourPlayerClassic_pos.collidepoint(event.pos): # if user clicks option 2
                     game = gameRunner("fourplayer", 1, 1, 1)
+                    game = None
+                elif fourPlayerFFA_pos.collidepoint(event.pos): # if user clicks option 2
+                    game = gameRunner("4pFFA", 1, 1, 1)
+                    game = None
+                elif fourPlayerRally_pos.collidepoint(event.pos): # if user clicks option 2
+                    game = gameRunner("4pRally", 1, 1, 1)
                     game = None
                     
                 elif settings_pos.collidepoint(event.pos): # if user clicks settings button
@@ -79,8 +122,16 @@ def splashscreen():
 
         # display text and button
         window.blit(title_text, title_pos)
+
         window.blit(option1_text, option1_pos)
+        window.blit(twoPlayerClassic_text, twoPlayerClassic_pos)
+        window.blit(twoPlayerRally_text, twoPlayerRally_pos)
+
         window.blit(option2_text, option2_pos)
+        window.blit(fourPlayerClassic_text, fourPlayerClassic_pos)
+        window.blit(fourPlayerRally_text, fourPlayerRally_pos)
+        window.blit(fourPlayerFFA_text, fourPlayerFFA_pos)
+
         window.blit(settings_text, settings_pos)
         window.blit(button_text, button_pos)
 
