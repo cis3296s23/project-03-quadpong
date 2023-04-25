@@ -105,6 +105,7 @@ def splashscreen(user_settings):
 
                 elif fourPlayerClassic_pos.collidepoint(event.pos): # if user clicks 4p classic
                     pygame.quit()
+
                     game = gameRunner("fourplayer", user_settings.points_to_win, user_settings.ball_count, user_settings.ball_speed)
                     game = None
                     
