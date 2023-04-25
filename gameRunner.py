@@ -62,7 +62,7 @@ class gameRunner:
         if (gamemode == "2pRally" or gamemode == "4pRally"):
             self.pen.write("Consecutive Hits: 0 ", align="center",
                            font=("Courier", 19, "bold"))
-        elif (gamemode == "twoplayer" or "fourplayer"):
+        elif (gamemode == "twoplayer" or gamemode == "fourplayer"):
             self.pen.write("Team 1: 0  Team 2: 0", align="center", font=("Courier", 19, "bold"))
         elif (gamemode == "4pFFA"):
             self.pen.write("Red: 0  Blue: 0  Green: 0  Purple: 0", align="center", font=("Courier", 19, "bold"))
