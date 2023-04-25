@@ -1,5 +1,7 @@
 
 from turtle import Turtle
+import random
+
 
 class obj:
     def __init__(self):
@@ -66,8 +68,8 @@ class ball(obj):
         self.turtle.color("black")
         self.turtle.penup()
         self.turtle.goto(0, 0)
-        self.dx = 2 * speed
-        self.dy = 1 * speed
+        self.dx = random.randint(1, 3) * speed
+        self.dy = random.randint(1, 3) * speed
     
     def move(self):
         self.setx(self.getx() + self.dx)
@@ -75,3 +77,9 @@ class ball(obj):
 
     def reset(self):
         self.turtle.goto(0,0)
+
+class settingsObj:
+    def __init__(self):
+        self.ball_speed = 1
+        self.ball_count = 1
+        self.points_to_win = 10

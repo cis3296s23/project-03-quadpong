@@ -1,16 +1,11 @@
 import pygame
-import splashscreenSETTINGS
+import settings
 from gameRunner import gameRunner
 from gameObjs import ball, paddle
 
-def splashscreen():
-
-    # initialize pygame
-    pygame.init()
+def splashscreen(user_settings):
 
     # set window size
-    #win_width = 1920
-    #win_height = 1080
     info = pygame.display.Info()
     win_width = info.current_w
     win_height = info.current_h
@@ -100,31 +95,32 @@ def splashscreen():
 
                 elif twoPlayerClassic_pos.collidepoint(event.pos): # if user clicks two player classic
                     pygame.quit()
-                    game = gameRunner("twoplayer", 1, 1, 1)
+                    game = gameRunner("twoplayer", user_settings.points_to_win, user_settings.ball_count, user_settings.ball_speed)
                     game = None
                     
                 elif twoPlayerRally_pos.collidepoint(event.pos): # if user clicks 2p rally
                     pygame.quit()
-                    game = gameRunner("2pRally", 1, 1, 1)
+                    game = gameRunner("2pRally", user_settings.points_to_win, user_settings.ball_count, user_settings.ball_speed)
                     game = None
 
                 elif fourPlayerClassic_pos.collidepoint(event.pos): # if user clicks 4p classic
                     pygame.quit()
-                    game = gameRunner("fourplayer", 1, 1, 1)
+
+                    game = gameRunner("fourplayer", user_settings.points_to_win, user_settings.ball_count, user_settings.ball_speed)
                     game = None
                     
                 elif fourPlayerFFA_pos.collidepoint(event.pos): # if user clicks 4p FFA
                     pygame.quit()
-                    game = gameRunner("4pFFA", 1, 1, 1)
+                    game = gameRunner("4pFFA", user_settings.points_to_win, user_settings.ball_count, user_settings.ball_speed)
                     game = None
                     
                 elif fourPlayerRally_pos.collidepoint(event.pos): # if user clicks Rally
                     pygame.quit()
-                    game = gameRunner("4pRally", 1, 1, 1)
+                    game = gameRunner("4pRally", user_settings.points_to_win, user_settings.ball_count, user_settings.ball_speed)
                     game = None
                     
                 elif settings_pos.collidepoint(event.pos): # if user clicks settings button
-                    splashscreenSETTINGS.SETTINGS()
+                    settings.settings(user_settings)
                     print("Settings Selected(Add code for settings window later)")
 
         # display text and button
