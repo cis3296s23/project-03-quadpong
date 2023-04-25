@@ -2,10 +2,11 @@
 # Domenic Malinsky, Rishi Duggal, Tyler Grenell 2023
 
 
-from turtle import Screen, Turtle, TurtleScreen 
+from turtle import Screen, Turtle, TurtleScreen
 import os
 import time
-from gameObjs import paddle, ball
+from gameObjs import paddle, ball, settingsObj 
+import pygame
 import splashscreen 
 
 class gameRunner:
@@ -69,7 +70,7 @@ class gameRunner:
         self.exit_button = Turtle()
         self.exit_button.shape("square")
         self.exit_button.color("white")
-        self.exit_button.shapesize(stretch_wid=2,stretch_len=3)
+        self.exit_button.shapesize(stretch_wid=1,stretch_len=3)
         self.exit_button.penup()
         self.exit_button.hideturtle()
         self.exit_button.goto(0, -375)
@@ -448,7 +449,7 @@ class gameRunner:
                 self.paddle_b.sety(-225)
 
 
-        elif(self.gamemode == "fourplayer" or self.gamemode == "4pRally" or "4pFFA"):
+        elif(self.gamemode == "fourplayer" or self.gamemode == "4pRally" or self.gamemode == "4pFFA"):
             if self.paddle_a.gety() >= 240:
                 self.paddle_a.sety(225)
     
@@ -484,6 +485,20 @@ class gameRunner:
         elif self.lastHit == 4:
             self.score4 += 1
 
+    def checkForWin(self):
+        if(self.gamemode == "2pRally" or self.gamemode =="4pRally"):
+            return False
+        
+        else:
+
+            if(self.score1 >= self.wincon or self.score2 >= self.wincon ):
+                self.endGame()
+
+            elif(self.gamemode == "4pFFA" or self.gamemode == "fourplayer"):
+                if(self.score3 >= self.wincon or self.score4 >= self.wincon):    
+                    self.endGame()
+
+            return False
 
     def runGame(self):
         # TODO make the internal function
@@ -497,11 +512,14 @@ class gameRunner:
             for x in self.balls:
 
                 x.move()
-                # Scoring
+                #Scoring
                 self.checkIfScore(x)
+
+                self.checkForWin()
 
                 #Collisions
                 self.checkCollisions(x)
+                    
 
             #BoundsChecking    
             self.checkPaddleBounds()
@@ -509,8 +527,28 @@ class gameRunner:
             time.sleep(1/1000)
 
         self.win.bye()
-        splashscreen.splashscreen() 
+        pygame.init()
+        splashscreen.splashscreen(user_settings = settingsObj()) 
 
+
+    def endGame(self):
+        self.pen.clear()
+        if(self.score1 >= self.wincon):
+            self.pen.write("We have a winner! Player 1", align="center", font=("Courier", 19, "bold"))
+
+        elif(self.score2 >= self.wincon):
+            self.pen.write("We have a winner! Player 2", align="center", font=("Courier", 19, "bold"))
+
+        elif(self.gamemode == "4pFFA" or self.gamemode == "fourplayer"):
+            if(self.score3 >= self.wincon):
+                self.pen.write("We have a winner! Player 3", align="center", font=("Courier", 19, "bold"))
+
+            elif(self.score4 >= self.wincon):
+                self.pen.write("We have a winner! Player 4", align="center", font=("Courier", 19, "bold"))
+        
+        self.exit_header.clear()
+        self.exit_header.write("Click Anywhere to Exit", align="center", font=("Courier", 19, "bold"))
+        self.win.onclick(self.exitGame)
 
     def exitGame(self, x, y):
         self.exit_flag = 1
