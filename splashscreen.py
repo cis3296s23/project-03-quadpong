@@ -1,7 +1,6 @@
 import pygame
 import settings
 from gameRunner import gameRunner
-from gameObjs import ball, paddle
 
 def splashscreen(user_settings):
     """
