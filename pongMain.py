@@ -1,7 +1,5 @@
-import settings
 import splashscreen
 import pygame
-from gameRunner import gameRunner
 from gameObjs import settingsObj
 
 user_settings = settingsObj()

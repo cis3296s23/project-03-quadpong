@@ -128,8 +128,7 @@ class ball(obj):
         self.turtle.goto(0,0)
 
 class settingsObj:
-    """Object to hold user settings
-    """
+    """Object to hold user settings"""
     def __init__(self):
         """ Creates settings obj and initializes to base values
         """
