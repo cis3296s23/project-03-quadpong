@@ -10,7 +10,20 @@ import pygame
 import splashscreen 
 
 class gameRunner:
+    """ 
+    Handles game logic and object creation.
+    
+    """
     def __init__(self, gamemode, points_to_win, ball_count, ball_speed):
+        """Initializes gamerunner to run based off of chosen gamemode and game settings.
+            creates windows, objects, and starts letting them move on screen.
+
+        Args:
+            gamemode (string): user specified gamemode.
+            points_to_win (int): user specified point threshold for winning the game
+            ball_count (int): user selected number of balls on screen
+            ball_speed (int): user selected speed multiplier for each ball.
+        """
 
         self.gamemode = gamemode
         self.wincon = points_to_win
@@ -40,16 +53,16 @@ class gameRunner:
         self.bd.fd(540)
         self.bd.hideturtle()
 
-        if(gamemode == "twoplayer" or gamemode == "2pRally"):
+        if gamemode in ["twoplayer", "2pRally"]:
             self.twoPlayerInit()
-        elif(gamemode == "fourplayer" or gamemode == "4pRally" or gamemode == "4pFFA"):
+        elif gamemode in ["fourplayer", "4pRally", "4pFFA"]:
             self.fourPlayerInit()    
-        
+
         self.balls = []
 
         for x in range(ball_count):
             self.balls.append(ball(ball_speed))
-           
+
 
         self.pen = Turtle()
         self.pen.speed(0)
@@ -59,10 +72,10 @@ class gameRunner:
         self.pen.hideturtle()
         self.pen.goto(0, 350)
 
-        if (gamemode == "2pRally" or gamemode == "4pRally"):
+        if gamemode in ["2pRally", "4pRally"]:
             self.pen.write("Consecutive Hits: 0 ", align="center",
                            font=("Courier", 19, "bold"))
-        elif (gamemode == "twoplayer" or gamemode == "fourplayer"):
+        elif gamemode in ["twoplayer", "fourplayer"]:
             self.pen.write("Team 1: 0  Team 2: 0", align="center", font=("Courier", 19, "bold"))
         elif (gamemode == "4pFFA"):
             self.pen.write("Red: 0  Blue: 0  Green: 0  Purple: 0", align="center", font=("Courier", 19, "bold"))
@@ -91,7 +104,8 @@ class gameRunner:
     
     
     def twoPlayerInit(self):
-        # TODO make this function
+        """ Function that only initializes two scores and two paddles for two player modes.
+        """
         
         self.score1 = 0
         self.score2 = 0
@@ -110,7 +124,8 @@ class gameRunner:
 
 
     def fourPlayerInit(self):
-        # TODO make this function
+        """ Function that initializes four scores and two paddles for four player modes.
+        """
         self.score1 = 0
         self.score2 = 0
         self.score3 = 0
@@ -141,20 +156,32 @@ class gameRunner:
         self.win.onkeypress(self.paddle_d.paddle_right, "Right")
 
     def checkIfScore(self, ball):
+        """
+        Function that checks ball x and y position and tells game whether or not the scoring boundary was crossed.
+
+        Args:
+            ball (ball): the current ball that is being tracked
+        """
         if (self.gamemode == "twoplayer"):
             if ball.getx() > 360:
                 self.score1 += 1
                 self.pen.clear()
-                self.pen.write("Team 1: {}  Team 2: {} ".format(self.score1, self.score2), align="center",
-                               font=("Courier", 19, "bold"))
+                self.pen.write(
+                    f"Team 1: {self.score1}  Team 2: {self.score2} ",
+                    align="center",
+                    font=("Courier", 19, "bold"),
+                )
                 ball.reset()
                 ball.dx *= -1
 
             elif ball.getx() < -360:
                 self.score2 += 1
                 self.pen.clear()
-                self.pen.write("Team 1: {}  Team 2: {} ".format(self.score1, self.score2), align="center",
-                               font=("Courier", 19, "bold"))
+                self.pen.write(
+                    f"Team 1: {self.score1}  Team 2: {self.score2} ",
+                    align="center",
+                    font=("Courier", 19, "bold"),
+                )
                 ball.reset()
                 ball.dx *= -1
 
@@ -179,32 +206,44 @@ class gameRunner:
             if ball.getx() > 360:
                 self.score1 += 1
                 self.pen.clear()
-                self.pen.write("Team 1: {}  Team 2: {} ".format(self.score1, self.score2), align="center",
-                               font=("Courier", 19, "bold"))
+                self.pen.write(
+                    f"Team 1: {self.score1}  Team 2: {self.score2} ",
+                    align="center",
+                    font=("Courier", 19, "bold"),
+                )
                 ball.reset()
                 ball.dx *= -1
 
             elif ball.getx() < -360:
                 self.score2 += 1
                 self.pen.clear()
-                self.pen.write("Team 1: {}  Team 2: {} ".format(self.score1, self.score2), align="center",
-                               font=("Courier", 19, "bold"))
+                self.pen.write(
+                    f"Team 1: {self.score1}  Team 2: {self.score2} ",
+                    align="center",
+                    font=("Courier", 19, "bold"),
+                )
                 ball.reset()
                 ball.dx *= -1
 
             elif ball.gety() > 260:
                 self.score1 += 1
                 self.pen.clear()
-                self.pen.write("Team 1: {}  Team 2: {} ".format(self.score1, self.score2), align="center",
-                               font=("Courier", 19, "bold"))
+                self.pen.write(
+                    f"Team 1: {self.score1}  Team 2: {self.score2} ",
+                    align="center",
+                    font=("Courier", 19, "bold"),
+                )
                 ball.reset()
                 ball.dy *= -1
 
             elif ball.gety() < -260:
                 self.score2 += 1
                 self.pen.clear()
-                self.pen.write("Team 1: {}  Team 2: {} ".format(self.score1, self.score2), align="center",
-                               font=("Courier", 19, "bold"))
+                self.pen.write(
+                    f"Team 1: {self.score1}  Team 2: {self.score2} ",
+                    align="center",
+                    font=("Courier", 19, "bold"),
+                )
                 ball.reset()
                 ball.dy *= -1
 
@@ -278,6 +317,12 @@ class gameRunner:
                 ball.dy *= -1
 
     def checkCollisions(self, ball):
+        """
+        Function that checks the ball and paddle positions to make sure the objects collide and the ball is reflected.
+
+        Args:
+            ball (ball): ball being tracked
+        """
 
         if (self.gamemode == "twoplayer"):
 
@@ -435,10 +480,12 @@ class gameRunner:
 
     
     def checkPaddleBounds(self):
-        if(self.gamemode == "twoplayer" or self.gamemode == "2pRally"):
+        """Function that tracks paddle positions to make sure no paddles can move past the pen from the game window.
+        """
+        if self.gamemode in ["twoplayer", "2pRally"]:
             if self.paddle_a.gety() >= 240:
                 self.paddle_a.sety(225)
-    
+
             elif self.paddle_a.gety() <= -240:
                 self.paddle_a.sety(-225)
 
@@ -449,10 +496,10 @@ class gameRunner:
                 self.paddle_b.sety(-225)
 
 
-        elif(self.gamemode == "fourplayer" or self.gamemode == "4pRally" or self.gamemode == "4pFFA"):
+        elif self.gamemode in ["fourplayer", "4pRally", "4pFFA"]:
             if self.paddle_a.gety() >= 240:
                 self.paddle_a.sety(225)
-    
+
             elif self.paddle_a.gety() <= -240:
                 self.paddle_a.sety(-225)
 
@@ -476,6 +523,9 @@ class gameRunner:
     
     
     def FreeForAllScore(self):
+        """
+        Function that handles the scoring in the 4p free for all mode.
+        """
         if self.lastHit == 1:
             self.score1 += 1
         elif self.lastHit == 2:
@@ -486,27 +536,23 @@ class gameRunner:
             self.score4 += 1
 
     def checkForWin(self):
-        if(self.gamemode == "2pRally" or self.gamemode =="4pRally"):
-            return False
-        
-        else:
-
-            if(self.score1 >= self.wincon or self.score2 >= self.wincon ):
+        """function that checks to make sure no scores have gone past the threshold, and ends the game if they do"""
+        if (self.score1 >= self.wincon or self.score2 >= self.wincon ):
+            if self.gamemode not in ["2pRally", "4pRally"]:
                 self.endGame()
 
-            elif(self.gamemode == "4pFFA" or self.gamemode == "fourplayer"):
-                if(self.score3 >= self.wincon or self.score4 >= self.wincon):    
-                    self.endGame()
+        elif self.gamemode in ["4pFFA", "fourplayer"]:
+            if self.gamemode not in ["2pRally", "4pRally"] and (
+                self.score3 >= self.wincon or self.score4 >= self.wincon
+            ):
+                self.endGame()
 
-            return False
+        return False
 
     def runGame(self):
+        """function that contains the main control loop for the game"""
         # TODO make the internal function
-        while True:
-            
-            if(self.exit_flag):
-                break
-
+        while not self.exit_flag:
             self.win.update()
 
             for x in self.balls:
@@ -519,7 +565,7 @@ class gameRunner:
 
                 #Collisions
                 self.checkCollisions(x)
-                    
+
 
             #BoundsChecking    
             self.checkPaddleBounds()
@@ -532,25 +578,27 @@ class gameRunner:
 
 
     def endGame(self):
+        """function that announces a winner if there is one, ands the game"""
         self.pen.clear()
-        if(self.score1 >= self.wincon):
+        if (self.score1 >= self.wincon):
             self.pen.write("We have a winner! Player 1", align="center", font=("Courier", 19, "bold"))
 
         elif(self.score2 >= self.wincon):
             self.pen.write("We have a winner! Player 2", align="center", font=("Courier", 19, "bold"))
 
-        elif(self.gamemode == "4pFFA" or self.gamemode == "fourplayer"):
+        elif self.gamemode in ["4pFFA", "fourplayer"]:
             if(self.score3 >= self.wincon):
                 self.pen.write("We have a winner! Player 3", align="center", font=("Courier", 19, "bold"))
 
             elif(self.score4 >= self.wincon):
                 self.pen.write("We have a winner! Player 4", align="center", font=("Courier", 19, "bold"))
-        
+
         self.exit_header.clear()
         self.exit_header.write("Click Anywhere to Exit", align="center", font=("Courier", 19, "bold"))
         self.win.onclick(self.exitGame)
 
     def exitGame(self, x, y):
+        """function to exit the game and close the window"""
         self.exit_flag = 1
 
 
