@@ -4,7 +4,15 @@ from gameRunner import gameRunner
 from gameObjs import ball, paddle
 
 def splashscreen(user_settings):
+    """
+        Displays the splash screen with game options and settings.
 
+        Args:
+            user_settings (UserSettings): An instance of the UserSettings class.
+
+        Returns:
+            None
+        """
     # set window size
     info = pygame.display.Info()
     win_width = info.current_w

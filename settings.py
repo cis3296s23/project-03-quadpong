@@ -4,6 +4,22 @@ import splashscreen
 import gameObjs
 
 def settings(user_settings):
+    """Displays a settings menu using Pygame.
+
+        Args:
+            user_settings (Settings): The current user settings to display.
+
+        Returns:
+            None
+
+        The function initializes Pygame and creates a small window with text
+        describing the different settings options. The user can use the left and
+        right arrow keys to adjust the values of the settings options, and the
+        "Back" button to return to the main menu. The function does not return
+        anything, but instead modifies the `user_settings` object to reflect any
+        changes made by the user.
+        """
+
     # initialize pygame
     #pygame.init()
 
